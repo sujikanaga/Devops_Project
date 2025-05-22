@@ -1,11 +1,11 @@
 # Use official Nginx image
 FROM nginx:alpine
 
-# Remove default nginx static files
+# Remove default Nginx page
 RUN rm -rf /usr/share/nginx/html/*
 
-# Copy your HTML files into the nginx folder
-COPY . /usr/share/nginx/html
+# Copy your calculator static files to Nginx html folder
+COPY cal.html /usr/share/nginx/html/index.html
+COPY style.css script.js th.jpg /usr/share/nginx/html/
 
-# Expose port 80
 EXPOSE 80

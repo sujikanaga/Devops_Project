@@ -8,23 +8,24 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                echo 'No build step required for static HTML project.'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'No automated tests defined for static HTML project.'
+                script {
+                    docker.build('html-calculator-app')
+                }
             }
         }
 
         stage('Deploy') {
             steps {
                 script {
-                    docker.build('html-calculator-app')
-                    echo 'Deploying the HTML calculator application...'
+                    // Stop old container if exists
+                    sh 'docker rm -f calc-container || true'
+
+                    // Run new container on port 9040
+                    sh 'docker run -d -p 9040:80 --name calc-container html-calculator-app'
+
+                    echo 'Application deployed at http://localhost:9040'
                 }
             }
         }
