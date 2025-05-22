@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/sujikanaga/Devops_Project.git'
+            }
+        }
+
         stage('Build') {
             steps {
                 echo 'No build step required for static HTML project.'

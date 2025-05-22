@@ -1,10 +1,11 @@
+# Use official Nginx image
 FROM nginx:alpine
 
-# Copy the HTML, CSS, and other static files to the Nginx web server directory
+# Remove default nginx static files
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy your HTML files into the nginx folder
 COPY . /usr/share/nginx/html
 
-# Expose port 80 for the web server
+# Expose port 80
 EXPOSE 80
-
-# Start the Nginx server
-CMD ["nginx", "-g", "daemon off;"]
